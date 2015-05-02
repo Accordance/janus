@@ -1,0 +1,41 @@
+development: &non_production_settings
+  :diplomat:
+    :consul_uri: http://dockerhost:8500
+    :consul_token: consul_token.development
+  :log:
+    :level: <%= ENV['LOG_LEVEL'] || 'INFO' %>
+    :logger:
+      - console
+      # - ./log/janus.log
+  :sidekiq:
+    :url: redis://<%= node = Diplomat::Service.get('redis'); "#{node.Address}:#{node.ServicePort}" %>/12
+    :size: 10
+#    :master_name: 'dock_redis'
+#    :sentinels:
+#      - sentinel://localhost:26379
+#      - sentinel://localhost:26378
+#      - sentinel://localhost:26377
+#    :failover_reconnect_timeout: 20 # roughly 3-5 seconds longer than the sentinel failover-timeout
+
+testing:
+  <<: *non_production_settings
+  :diplomat:
+    :consul_token:
+  :sidekiq:
+
+production:
+  :diplomat:
+    :consul_uri: http://consul01.accordance.net
+    :consul_token: consul_token.production
+  :log:
+    :level: <%= ENV['LOG_LEVEL'] || 'WARN' %>
+    :logger:
+      - console
+      - ./log/janus.log
+  :sidekiq:
+    :logger: false
+    :master_name: 'cd-redis-master'
+    :sentinels:
+      - sentinel://redis1.accordance.net:26379
+      - sentinel://redis2.accordance.net:26378
+    :failover_reconnect_timeout: 20 # roughly 3-5 seconds longer than the sentinel failover-timeout

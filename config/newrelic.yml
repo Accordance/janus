@@ -1,0 +1,22 @@
+common: &default_settings
+  app_name: janus
+  monitor_mode: true
+  developer_mode: false
+  log_level: info
+  ssl: true
+  apdex_t: 1.0
+  capture_params: false
+  transaction_tracer:
+    enabled: true
+    transaction_threshold: apdex_f
+    record_sql: obfuscated
+    stack_trace_threshold: 0.500
+  error_collector:
+    enabled: true
+    capture_source: true
+    ignore_errors: ActionController::RoutingError
+
+production:
+  <<: *default_settings
+  monitor_mode: true
+  license_key: 'XXXXXXXXXXXXXXXXXXXX'

@@ -1,0 +1,27 @@
+*.gem
+*.rbc
+.bundle
+.config
+.idea
+coverage
+InstalledFiles
+lib/bundler/man
+pkg
+target
+rdoc
+spec/reports
+test/tmp
+test/version_tmp
+tmp
+app/lib
+*.sample
+*.pid
+log
+out
+db
+
+# YARD artifacts
+.yardoc
+_yardoc
+doc
+VERSION

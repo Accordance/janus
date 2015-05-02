@@ -1,0 +1,45 @@
+development:
+  sessions:
+    default:
+      # uri: 'mongodb://username:password@host1:port1,host2:port2/database'
+      database: catalog
+      hosts: <%= "[#{Diplomat::Service.get('mongo', :all).map { |node| "\"#{node.Address}:#{node.ServicePort}\"" }.join(',')}]" %>
+      options:
+        consistency: :eventual # reads from secondaries when possible. :strong forces reads to primary
+        max_retries: 10 # seconds
+        retry_interval: 1 # seconds
+        # timeout: 15
+        # safe: true # round-trip operation and are confirmed by the system. Default (false)
+        refresh_interval: 10 # num of seconds to cache information about a node
+  options:
+    raise_not_found_error: false
+production:
+  sessions:
+    default:
+      database: catalog
+      hosts: <%= "[#{Diplomat::Service.get('mongo', :all).map { |node| "\"#{node.Address}:#{node.ServicePort}\"" }.join(',')}]" %>
+      options:
+        consistency: :eventual # reads from secondaries when possible. :strong forces reads to primary
+        max_retries: 10 # seconds
+        retry_interval: 1 # seconds
+        # timeout: 15
+        # safe: true # round-trip operation and are confirmed by the system. Default (false)
+        refresh_interval: 10 # num of seconds to cache information about a node
+  options:
+    raise_not_found_error: false
+testing:
+  sessions:
+    default:
+      database: catalog_test
+      hosts:
+        - localhost
+  options:
+    raise_not_found_error: false
+migrations:
+  sessions:
+    default:
+      database: catalog_migrations
+      hosts:
+        - localhost
+  options:
+    raise_not_found_error: false
