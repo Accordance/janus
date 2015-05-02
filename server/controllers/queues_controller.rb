@@ -3,7 +3,6 @@ require 'grape-entity'
 
 require_relative 'api/defaults'
 require_relative 'build_messages_controller'
-require_relative 'bootstrap_app_controller'
 
 # curl -k -v -X POST -d "message={ \"app\": [\"test1,test2\"], \"artifact_version\": \"v0.1.2\", \
 # \"env\": \"f1\", \"action\": \"deploy\", \"status_url\" : \"http://buildserver.accordance.net/jenkins/job/deploy-app/206/api/json\", \
@@ -26,7 +25,6 @@ module API
 
     namespace :queues do
       mount API::BuildMessagesController
-      mount API::BootstrapAppController
     end
   end
 end
