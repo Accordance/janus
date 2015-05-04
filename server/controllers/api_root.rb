@@ -20,6 +20,7 @@ module API
 
     # http://localhost:8080/api/swagger_doc.json
     # add_swagger_documentation(base_path: 'test')
+
     add_swagger_documentation hide_documentation_path: true,
                               base_path: (lambda do |request|
                                 if RACK_ENV == 'development'
@@ -28,6 +29,7 @@ module API
                                   return "https://#{request.host}"
                                 end
                               end)
+
     # # base_path: "/api"
     # root_base_path: false,
     # api_version: 'v1',

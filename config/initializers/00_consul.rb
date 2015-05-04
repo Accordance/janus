@@ -72,11 +72,14 @@ Diplomat.configure do |config|
 
   config.url = ENV['CONSUL_URI'] || config_data[:consul_uri]
 
-  middleware = [
-    # Custom404Errors,
-    # Faraday::Adapter::NetHttp
-    # Faraday::Response::Logger
-  ]
+  middleware = []
+  if ENV['LOG_LEVEL'] == 'DEBUG'
+    middleware = [
+      # Custom404Errors,
+      Faraday::Adapter::NetHttp,
+      Faraday::Response::Logger
+    ]
+  end
 
   middleware.unshift(ConsulToken) if init_consul_token(config_data[:consul_token])
   middleware.unshift(ConsulLogger) if ENV['LOG_LEVEL'] == 'DEBUG'

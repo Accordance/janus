@@ -18,4 +18,4 @@ environment ENV['RACK_ENV']
 
 threads 4, 8
 
-activate_control_app
+activate_control_app 'tcp://0.0.0.0:9293', auth_token: 'immediate72~wear'

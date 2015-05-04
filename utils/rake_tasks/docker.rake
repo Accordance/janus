@@ -1,5 +1,5 @@
 namespace :docker do
-  desc 'Create Docker'
+  desc 'Create Docker file'
   task create: :prepare do
     @app_version = Application::VERSION
     @app_name = Application::NAME

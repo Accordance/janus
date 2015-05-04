@@ -25,7 +25,7 @@ testing:
 
 production:
   :diplomat:
-    :consul_uri: http://consul01.accordance.net
+    :consul_uri: <%= ENV['CONSUL_URI'] || 'http://consul01.accordance.net' %>
     :consul_token: consul_token.production
   :log:
     :level: <%= ENV['LOG_LEVEL'] || 'WARN' %>
