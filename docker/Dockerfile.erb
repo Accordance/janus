@@ -1,0 +1,25 @@
+FROM ruby:2.1.2
+MAINTAINER Igor Moochnick <igor@igroshare.com>
+
+ENV APP_VERSION <%= @app_version %>
+ENV APP_NAME <%= @app_name %>
+ENV RACK_ENV <%= @environment %>
+ENV LOG_LEVEL WARN
+ENV PORT 8081
+ENV BIND_IP 0.0.0.0
+
+EXPOSE 8081
+
+ADD <%= @app_version %>/<%= @app_name %>-<%= @app_version %>.tar.gz /opt/
+
+RUN mv /opt/<%= @app_name %>-<%= @app_version %> /opt/<%= @app_name %>
+
+WORKDIR /opt/<%= @app_name %>
+RUN chown -R root:root .
+
+# RUN bundle install --local --deployment --without development test
+# TODO: what is wrong with this?
+RUN bundle install --without development test
+RUN mkdir -p log
+
+CMD bundler exec puma --config config/puma.rb

@@ -16,7 +16,7 @@ module MaintenanceEventProvider
     field :description, as: :desc, type: String  # summary
     field :type, type: String
     field :details, type: Hash
-    field :assignee, type: String
+    field :assignee, type: Hash
     # field :status, :type => Symbol, :default => :unknown
 
     def time_frame_str=(time_start_str, time_end_str)
