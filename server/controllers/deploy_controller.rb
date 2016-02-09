@@ -18,12 +18,13 @@ module API
         [403, 'Deploy Not Allowed']
       ]  do
         
-        conn = Faraday.new(:url => 'http://192.168.99.100:8000')
-            response = conn.post do |req| 
-              req.url '/apps/deploy'
-              req.headers['Content-Type'] = 'application/json'
-              req.body = "{ \"id\": \"#{params[:id]}\", \"version\" : \"#{params[:version]}\" }"
-            end
+        node = Diplomat::Service.get('atlas');             
+        conn = Faraday.new(:url => "http://#{node.Address}:#{node.ServicePort}")
+        response = conn.post do |req| 
+          req.url '/apps/deploy'
+          req.headers['Content-Type'] = 'application/json'
+          req.body = "{ \"id\": \"#{params[:id]}\", \"version\" : \"#{params[:version]}\" }"
+        end
         if response.status == 200
           status 200
         elsif response.status == 403
@@ -36,7 +37,8 @@ module API
         [403, 'Lock release failed']
       ]	do
         
-        conn = Faraday.new(:url => 'http://192.168.99.100:8000')
+        node = Diplomat::Service.get('atlas');         
+        conn = Faraday.new(:url => "http://#{node.Address}:#{node.ServicePort}")
         response = conn.post do |req| 
           req.url '/apps/release-deploy'
           req.headers['Content-Type'] = 'application/json'
