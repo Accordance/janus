@@ -21,6 +21,7 @@ gem 'roar'
 gem 'rack-contrib'
 gem 'diplomat'
 gem 'rack-cors'
+gem 'faraday'
 
 group :development  do
 end

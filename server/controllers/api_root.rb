@@ -5,6 +5,7 @@ require_relative 'api/defaults'
 require_relative 'janus_controller'
 require_relative 'janus_maintenance_controller'
 require_relative 'queues_controller'
+require_relative 'deploy_controller'
 
 module API
   class Root < Grape::API
@@ -12,6 +13,7 @@ module API
     mount API::JanusMaintenanceController
     mount API::JanusController
     mount API::QueuesController
+    mount API::DeployController
 
     # before do
     #   header['Access-Control-Allow-Origin'] = '*'
